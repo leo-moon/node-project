@@ -6,13 +6,11 @@ const { nanoid } = require("nanoid");
 const contactsPath = path.join(__dirname, "contacts.json");
 
 const listContacts = async () => {
-
   const data = await fs.readFile(contactsPath);
   return JSON.parse(data);
 };
 
 const getContact = async (id, name, email, phone) => {
-  console.log(id, name, email, phone);
   const contacts = await listContacts();
   const result = contacts.filter(
     contact =>
@@ -37,19 +35,16 @@ const removeContact = async id => {
 
 const addContact = async ({ name, email, phone }) => {
   const contacts = await listContacts();
-  const result =  contacts.forEach(contact => {
-    console.log('jjjjjj',contact.name, name);
+  const index = contacts.findIndex(contact => {
     if (
-      contact.name == name 
-      // &
-      // contact.phone === phone &
-      // contact.email === email
+      (contact.name == name) &
+      (contact.phone === phone) &
+      (contact.email === email)
     )
       return true;
   });
-  console.log(result);
 
-  if (result) return 5555;
+  if (index !== -1) return contacts[index];
   else {
     const addingContact = {
       id: nanoid(),
