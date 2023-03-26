@@ -1,6 +1,5 @@
-// console.log("Welcome to Hell")
+const { program } = require("commander");
 
-// const contacts = require("./db/contacts");
 const contacts = require("./db/contacts");
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
@@ -8,24 +7,26 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
     case "list":
       const allContacts = await contacts.listContacts();
       return console.log(allContacts);
-    case "readContactById":
-      const contactById = await contacts.getContactById(id);
+    case "get":
+      const contactById = await contacts.getContact(id, name, email, phone);
       return console.log(contactById);
-    case "addContact":
+    case "add":
       const addingContact = await contacts.addContact({ name, email, phone });
       return console.log(addingContact);
-    case "deleteContactById":
+    case "remove":
       const deletingContact = await contacts.removeContact(id);
       return console.log(deletingContact);
   }
 };
 
-// invokeAction({ action: "list" });
-// invokeAction({ action: "readContactById", id: "qdggE76Jtbfd9eWJHrssH" });
-// invokeAction({
-//   action: "addContact",
-//   name: "Allenaethtzesh Raymond",
-//   email: "nulla.ante@vestibul.co.ukQQQ",
-//   phone: "(992) 914-0000",
-// });
-invokeAction({ action: "deleteContactById", id: "e6ywwRe4jcqxXfCZOj_1e" });
+program
+  .option("-a, --action <type>")
+  .option("-id, --id <type>")
+  .option("-n, --name <type>")
+  .option("-e, --email <type>")
+  .option("-p, --phone <type>");
+
+program.parse();
+
+const options = program.opts();
+invokeAction(options);
