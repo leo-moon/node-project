@@ -25,7 +25,7 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 // ---------------------- To use program ----------------
 program
   .option("-a, --action <type>")
-  .option("-id, --id <type>")
+  .option("-i, --id <type>")
   .option("-n, --name <type>")
   .option("-e, --email <type>")
   .option("-p, --phone <type>");
