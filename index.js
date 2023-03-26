@@ -23,14 +23,6 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 };
 
 
-
-// --------------------- To use yargs -------------------
-// const arr = hideBin(process.argv);
-// // console.log(arr)
-// const {argv} = yargs(arr)
-// // console.log(argv)
-// invokeAction( argv );
-
 // ---------------------- To use program ----------------
 program
   .option("-a, --action <type>")
@@ -43,3 +35,8 @@ program.parse();
 
 const options = program.opts();
 invokeAction(options);
+
+// --------------------- To use yargs -------------------
+// const arr = hideBin(process.argv);
+// const { argv } = yargs(arr);
+// invokeAction(argv);

@@ -20,8 +20,8 @@ const getContact = async (id, name, email, phone) => {
     contact =>
       contact.id.includes(`${id}`) ||
       contact.name.includes(`${name}`) ||
-      contact.phone.includes(`${ phone }`)||
-      contact.email.includes(`${ email}`)
+      contact.phone.includes(`${phone}`) ||
+      contact.email.includes(`${email}`)
   );
   return result || null;
 };
@@ -39,15 +39,30 @@ const removeContact = async id => {
 
 const addContact = async ({ name, email, phone }) => {
   const contacts = await listContacts();
-  const addingContact = {
-    id: nanoid(),
-    name,
-    email,
-    phone,
-  };
-  contacts.push(addingContact);
-  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-  return addingContact;
+  const result =  contacts.forEach(contact => {
+    console.log('jjjjjj',contact.name, name);
+    if (
+      contact.name == name 
+      // &
+      // contact.phone === phone &
+      // contact.email === email
+    )
+      return true;
+  });
+  console.log(result);
+
+  if (result) return 5555;
+  else {
+    const addingContact = {
+      id: nanoid(),
+      name,
+      email,
+      phone,
+    };
+    contacts.push(addingContact);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    return addingContact;
+  }
 };
 
 module.exports = {
